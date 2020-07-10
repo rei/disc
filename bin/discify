@@ -25,6 +25,9 @@ var argv = optimist
   .alias('m', 'mode')
   .describe('m', 'the default file scale mode to display: should be either "count" or "size". Default: size')
 
+  .alias('r', 'report')
+  .describe('r', 'Generate report of the largest n modules in bundle')
+
   .argv
 
 if (argv.help) {
@@ -53,6 +56,18 @@ if (!files.length) {
 }
 
 function handle(bundles) {
+
+  // Generate text-based report of the top n modules in bundle.
+  if (argv.report) {
+    disc.bundle(bundles, {
+      mode: argv.mode,
+      report: argv.report
+    }, function (err, json) {
+      console.log(json)
+    })
+    return;
+  }
+
   disc.bundle(bundles, {
     mode: argv.mode
   }, function(err, html) {

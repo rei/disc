@@ -12,6 +12,7 @@ var fs = require('fs')
 var bl = require('bl')
 
 var versions = require('./lib/versions')
+const report = require('./lib/report')
 
 module.exports = createStream
 createStream.json = json
@@ -154,6 +155,11 @@ function bundle(bundles, opts, callback) {
   return json(bundles, function(err, data) {
     if (err) return callback(err)
 
+    // Generate report. (-r, --report)
+    if (opts.report) {
+      return callback(null, report.generate(data, opts.report))
+    }
+
     data.mode = opts.mode || 'size'
     data = '<script type="text/javascript">'
       + ';window.disc = ('
@@ -170,7 +176,7 @@ function bundle(bundles, opts, callback) {
       , markdown: footer
       , header: header
       , data: data
-    }))
+    }), json)
   })
 }
 

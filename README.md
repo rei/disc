@@ -34,6 +34,7 @@ Options:
   -O, --open    Opens disc in a new browser window automatically
   -m, --mode    the default file scale mode to display: should be
                 either "count" or "size". Default: size
+  -r, --report  Generate a text-only report of the largest n modules in bundle, descending order. e.g., -r10 lists the top 10 largest bundles.
 ```
 
 When you install disc globally, the `discify` command-line tool is made
